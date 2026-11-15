@@ -1,0 +1,7 @@
+# regtest-sccs-lpb-3 -- constant potential (&GCE UPDATE_SCHEME CAPACITANCE), 12-atom Al(111) slab
+# tol = 1.0E-4: the energy is the endpoint of an outer loop of electron-number updates on top of
+# the SCF, and a metallic grand-canonical SCF scatters by about 1E-4 Ha between builds.
+# The test also requires the output to contain "GCE| outer update" lines; that half is not
+# expressible as a matcher, so check it with: grep -c "GCE| outer update" <output>
+"Al111_gce_cap_lpb.inp"         = [{matcher="E_total", tol=1.0E-4, ref=-24.68817404180753}]
+#EOF

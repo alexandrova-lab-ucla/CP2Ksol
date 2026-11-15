@@ -1,0 +1,94 @@
+# regtest-sccs-lpb-6 -- GCE CAPACITANCE with a planar counter charge and no &SCCS: the outer update loop must run without an SCCS control (earlier builds dereferenced the missing section).
+# The Al(111) slab of Al111_gce_rks.inp, PLANAR_COUNTER_CHARGE in place of the electrolyte. Runs to the end and prints "GCE| outer update" lines.
+&GLOBAL
+  PRINT_LEVEL medium
+  PROJECT Al111_gce_pcc
+  RUN_TYPE ENERGY
+  SEED 1234
+&END GLOBAL
+&FORCE_EVAL
+  METHOD Quickstep
+  &DFT
+    BASIS_SET_FILE_NAME BASIS_MOLOPT
+    POTENTIAL_FILE_NAME GTH_POTENTIALS
+    CHARGE 0
+    &MGRID
+      CUTOFF 300
+      REL_CUTOFF 40
+      NGRIDS 4
+    &END MGRID
+    &POISSON
+      PERIODIC XYZ
+      POISSON_SOLVER PERIODIC
+    &END POISSON
+    &QS
+      EPS_DEFAULT 1.0E-10
+      EXTRAPOLATION ASPC
+    &END QS
+    &PLANAR_COUNTER_CHARGE ON
+      PARALLEL_PLANE XY
+      DIST_EDGE [angstrom] 2.0
+      GAU_C [angstrom] 0.5
+    &END PLANAR_COUNTER_CHARGE
+    &SCF
+      EPS_SCF 1.0E-6
+      MAX_SCF 300
+      SCF_GUESS atomic
+      ADDED_MOS 20
+      &DIAGONALIZATION on
+        ALGORITHM STANDARD
+      &END DIAGONALIZATION
+      &SMEAR on
+        METHOD FERMI_DIRAC
+        ELECTRONIC_TEMPERATURE [K] 300
+      &END SMEAR
+      &MIXING
+        METHOD BROYDEN_MIXING
+        ALPHA 0.2
+        NBROYDEN 8
+      &END MIXING
+      &GCE on
+        UPDATE_SCHEME CAPACITANCE
+        UPDATE_EVERY SCF_CYCLE
+        TARGET_POTENTIAL [eV] 0.5
+        PHI_SHE [eV] 4.43
+        FERMI_TOL [eV] 0.01
+        MAX_OUTER_UPDATES 5
+      &END GCE
+      &PRINT
+        &RESTART off
+        &END RESTART
+      &END PRINT
+    &END SCF
+    &XC
+      &XC_FUNCTIONAL PBE
+      &END XC_FUNCTIONAL
+    &END XC
+  &END DFT
+  &SUBSYS
+    &CELL
+      A      5.726900    0.000000    0.000000
+      B      2.863450    4.959638    0.000000
+      C      0.000000    0.000000   20.000000
+      PERIODIC XYZ
+    &END CELL
+    &COORD
+      Al        0.000000    0.000000    7.662000
+      Al        2.863450    0.000000    7.662000
+      Al        1.431725    2.479820    7.662000
+      Al        4.295175    2.479820    7.662000
+      Al        1.431725    0.826607   10.000000
+      Al        4.295175    0.826607   10.000000
+      Al        2.863450    3.306427   10.000000
+      Al        5.726900    3.306427   10.000000
+      Al        2.863450    1.653213   12.338000
+      Al        5.726900    1.653213   12.338000
+      Al        4.295175    4.133033   12.338000
+      Al        7.158625    4.133033   12.338000
+    &END COORD
+    &KIND Al
+      BASIS_SET DZVP-MOLOPT-SR-GTH
+      POTENTIAL GTH-PBE-q3
+    &END KIND
+  &END SUBSYS
+&END FORCE_EVAL

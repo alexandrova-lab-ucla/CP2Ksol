@@ -1,0 +1,14 @@
+# regtest-sccs-lpb-5 -- atom-following explicit-solvent exclusion mask (&SCCS&EXCLUSION)
+# H2O_se_exclusion_off.inp: energy identical to the base deck H2O_solvent_excluded_nli_nld.inp (EXCLUSION OFF is a no-op).
+"H2O_se_exclusion_off.inp" = [{matcher="E_total", tol=1.0E-7, ref=-17.23505472278111}]
+# RUN_TYPE DEBUG finite-difference forces of K+ + 6 H2O (19 atoms, 15 A box). M042 = sum over 3N components of
+# |F_numerical - F_analytical| in Ha/bohr. No reference values are recorded yet, so the three decks are not listed;
+# enable the lines below after the first run. Pass criterion (read from the DEBUG table, not from M042):
+# per-atom |dF| <= 1E-4 Ha/bohr and <= 0.1 % relative.
+# "K6H2O_dbg_se_exclusion_lpb.inp"        = [{matcher="M042", tol=1.0E-2, ref=TO_BE_GENERATED_ON_HPC}]
+# "K6H2O_dbg_se_exclusion_nli_nld.inp"    = [{matcher="M042", tol=1.0E-2, ref=TO_BE_GENERATED_ON_HPC}]
+# "K6H2O_dbg_se_exclusion_linear_all.inp" = [{matcher="M042", tol=1.0E-2, ref=TO_BE_GENERATED_ON_HPC}]
+# RUN_TYPE DEBUG on H2O with large exclusion spheres: pins the sign and size of the explicit mask force (header of the deck).
+"H2O_dbg_se_exclusion.inp" = [{matcher="M042", tol=1.0E-2, ref=4.8e-07}]
+# H2O_isodensity_exclusion_abort.inp MUST ABORT ('SCCS EXCLUSION is implemented only for METHOD SOLVENT_EXCLUDED'); not listed.
+#EOF

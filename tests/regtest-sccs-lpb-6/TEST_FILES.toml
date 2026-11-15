@@ -1,0 +1,48 @@
+# regtest-sccs-lpb-6 -- GCE state round: restart state, per-step Omega, ENFORCE_TARGET, UKS (12-atom Al(111) slab).
+# tol = 1.0E-4: every deck ends on a constant-potential SCF whose energy scatters by up to 3E-5 Ha between runs of one build.
+# Conditions a matcher cannot express (check with grep on the output):
+#   Al111_gce_md_state.inp        grep -c "GCE| omega" = 13 ; grep -c "GCE| conserved" = 13 ; Cons_Omega of the 13 lines within 1E-5 Ha
+#                                 (Cons drifts by 5E-3 Ha); the run writes Al111_gce_md_state-1_7.restart
+#   Al111_gce_md_omega.inp        the same two counts, 13 each
+#   Al111_gce_geo_opt_enforce.inp last "GCE| trace" line has |dU| <= 0.01 V (FERMI_TOL)
+#   Al111_gce_geo_opt_plain.inp   last "GCE| trace" line has |dU| = 0.1206 V (earlier behaviour: not at the target)
+#   Al111_gce_maxscf_cycle.inp    MAX_SCF 60 against 150 steps in five SCF cycles: five "SCF run converged" lines, no "NOT converged"
+#   Al111_gce_pcc.inp             no crash without &SCCS; four "SCF run converged" lines and "GCE| outer update" lines
+#   Al111_gce_c_adapt.inp         "GCE| outer update" C column 4.0000, 2.0000, then two values below 2.5 e/V; |dU| of the last "GCE| trace" line <= 0.01 V
+#   Al111_gce_fixq_mode2.inp      no "GCE| outer update" line; the N_e column of the six "GCE| trace" lines reads 34.900000 e (MAX_OUTER_UPDATES 0 in CONVERGENCE_MODE 2)
+#   Al111_gce_uks.inp, _uks_pin   E_total equals Al111_gce_rks.inp to 1E-5 Ha; _uks_pin also prints "PIN_MIXER_G0 is implemented for"
+# Decks that must be run by hand (an abort, or an input file produced by an earlier deck) are NOT listed:
+#   Al111_gce_unreach_abort.inp   non-zero exit, "GCE ENFORCE_TARGET: the target is not reached after 3 updates" and "stays on one side"
+#   H2O_gce_gap_abort.inp         non-zero exit, "GCE ENFORCE_TARGET: the target is not reached after 8 updates" and "crosses the target without hitting it"
+#   Al111_gce_restart_excess_abort.inp, Al111_gce_dyn_ninput_abort.inp, Al111_gce_notarget_abort.inp, Al111_gce_uks_subspace_abort.inp
+#                                 non-zero exit with the message named in the first comment lines of each deck
+#   Al111_gce_dyn_dt_restart.inp  needs Al111_gce_dynamics-1.restart (run Al111_gce_dynamics.inp first and copy the file); runs 4 steps of 0.5 fs, prints 5 "GCE| dyn  step" lines
+#   Al111_gce_md_state_restart.inp       needs Al111_gce_md_state-1_7.restart (run Al111_gce_md_state.inp first and copy the file);
+#                                 "GRAND-CANONICAL ELECTRODE STATE" in the restart summary, "GCE| state read from the restart" printed,
+#                                 no "GCE| outer update" line before the first "GCE| trace", N_e of the steps 9..13 within 1E-3 e of the first run
+#   Al111_gce_md_state_restart_cold.inp  same restart file with RESTART_GCE F: 4 "GCE| outer update" lines before the first "GCE| trace"
+#   Al111_gce_md_state_restart_newU.inp  same restart file, TARGET_POTENTIAL 0.3 V: N_e moves to the new target (|dU| <= 0.01 V from trace step 9)
+"Al111_gce_md_state.inp"             = [{matcher="E_total", tol=1.0E-4, ref=-24.704440459583164}]
+"Al111_gce_md_omega.inp"             = [{matcher="E_total", tol=1.0E-4, ref=-24.703586911950190}]
+"Al111_gce_geo_opt_enforce.inp"      = [{matcher="E_total", tol=1.0E-4, ref=-24.724429101802080}]
+"Al111_gce_geo_opt_plain.inp"        = [{matcher="E_total", tol=1.0E-4, ref=-24.758066716480190}]
+"Al111_gce_rks.inp"                  = [{matcher="E_total", tol=1.0E-4, ref=-24.68816468360957}]
+"Al111_gce_maxscf_cycle.inp"         = [{matcher="E_total", tol=1.0E-4, ref=-24.68816468360957}]
+"Al111_gce_uks.inp"                  = [{matcher="E_total", tol=1.0E-4, ref=-24.68816087818234}]
+"Al111_gce_uks_pin.inp"              = [{matcher="E_total", tol=1.0E-4, ref=-24.68816087818234}]
+"Al111_gce_unreach_continue.inp"     = [{matcher="E_total", tol=1.0E-4, ref=-24.850645015289064}]
+"Al111_gce_pcc.inp"                  = [{matcher="E_total", tol=1.0E-4, ref=-24.853235990507056}]
+"Al111_gce_c_adapt.inp"              = [{matcher="E_total", tol=1.0E-4, ref=-24.702406581397501}]
+"Al111_gce_fixq_mode2.inp"            = [{matcher="E_total", tol=1.0E-4, ref=-24.709661529329239}]
+# ---- UPDATE_SCHEME DYNAMICS ----
+# regtest-sccs-lpb-6 -- UPDATE_SCHEME DYNAMICS (electron-number dynamics, one SCF per ionic step)
+# Al111_gce_dynamics.inp: 12-atom Al slab, MD NVE 6 steps, POTENTIOSTAT_PERIOD 20 fs, chain length 2.
+# Reference: total energy of MD step 6; tol 1.0E-4 as in regtest-sccs-lpb-3 (metallic grand-canonical SCF scatters by about 1E-4 Ha between builds).
+"Al111_gce_dynamics.inp" = [{matcher="E_total", tol=1.0E-4, ref=-24.685606259968200}]
+# Al111_gce_dyn_noperiod_abort.inp, Al111_gce_dyn_energy_abort.inp, Al111_gce_dyn_chain_abort.inp and
+# Al111_gce_dyn_scfstep_abort.inp MUST ABORT with the message named in their first comment line; not listed.
+# Former keyword names (aliases); same energy as Al111_gce_fixq_mode2.inp.
+"Al111_gce_fixq_mode2_legacy_names.inp" = [{matcher="E_total", tol=1.0E-4, ref=-24.709661529329239}]
+# Default PHI_SHE (4.600 eV): target work function 0.5 + 4.600 eV; reference from the first run (gcc 11.4).
+"Al111_gce_rks_default_phi.inp" = [{matcher="E_total", tol=1.0E-4, ref=-24.638323309962583}]
+#EOF

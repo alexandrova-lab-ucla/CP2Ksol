@@ -1,0 +1,24 @@
+# regtest-sccs-lpb-1 -- implicit solvent and electrolyte, energy tier (H2O, 10 A box, CUTOFF 400)
+# Runs are executed in the order of this file.
+# Relative tolerances: 1.0E-10 for the linear and fixed-point paths (a, b, c, e);
+# 1.0E-7 for the Newton paths with a nonlinear response (d, f).
+# (a) and (b) differ by 2.0E-6 Ha: the Jacobi solver under-converges; each deck pins its own value.
+# (a) and (e) are identical under the current defaults; see the header of (e).
+"H2O_isodensity_jacobi.inp"        = [{matcher="E_total", tol=1.0E-10, ref=-17.23151142369274}]
+"H2O_isodensity_newton.inp"        = [{matcher="E_total", tol=1.0E-10, ref=-17.231509409128453}]
+"H2O_isodensity_lpb.inp"           = [{matcher="E_total", tol=1.0E-10, ref=-17.23152962015388}]
+"H2O_solvent_excluded_nli_nld.inp"     = [{matcher="E_total", tol=1.0E-7,  ref=-17.23505472278111}]
+"H2O_isodensity_core_density.inp"    = [{matcher="E_total", tol=1.0E-10, ref=-17.23151142369274}]
+"H2O_solvent_excluded_devel.inp"       = [{matcher="E_total", tol=1.0E-7,  ref=-17.23505521457906}]
+# (g) REGION report only: identical to (d) by construction (-17.235054722781115, dE 5e-15).
+# (h)/(i) REGION applied (LOWER_EDGE 5 A, half the box without solvent): references from the same run (gcc 14.3).
+"H2O_solvent_excluded_nli_nld_region_report.inp" = [{matcher="E_total", tol=1.0E-10, ref=-17.23505472278111}]
+# Periodic window at the right grid origin, LOWER_EDGE 5 / UPPER_EDGE 10 A:
+"H2O_solvent_excluded_nli_nld_region_apply.inp"  = [{matcher="E_total", tol=1.0E-7,  ref=-17.226735087837788}]
+"H2O_isodensity_lpb_region_apply.inp"            = [{matcher="E_total", tol=1.0E-10, ref=-17.227025052550580}]
+# PROBE_ATOMS, PROBE_RADIUS, PRINT_POL_DIAGNOSTICS and SOLVER_MAX_FAILURES (never reached) only print;
+# the energy must equal the region_apply reference above. Check the new lines with: grep -c 'SCCS| region post-mask' <output> (> 0).
+"H2O_solvent_excluded_nli_nld_region_probe.inp"  = [{matcher="E_total", tol=1.0E-7,  ref=-17.226735087837788}]
+# Former keyword names (aliases): all input keywords written with their former names; same energy as the region_probe deck.
+"H2O_solvent_excluded_nli_nld_region_probe_legacy_names.inp" = [{matcher="E_total", tol=1.0E-7,  ref=-17.226735087837788}]
+#EOF

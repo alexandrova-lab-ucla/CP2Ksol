@@ -1,0 +1,9 @@
+# regtest-sccs-lpb-2 -- RUN_TYPE DEBUG finite-difference force tier (H2O, 8 A box, CUTOFF 600)
+# matcher M042 reads the line "DEBUG| Sum of differences:" = sum over 3N components of
+# |F_numerical - F_analytical| in Ha/bohr. It pins a physical residual, not a converged energy,
+# so tol = 1.0E-2 (1 %) is deliberate: a missing force term moves it by orders of magnitude.
+# E_total is not pinned here: a DEBUG run prints it once per displaced geometry.
+"H2O_dbg_isodensity_core_density.inp" = [{matcher="M042", tol=1.0E-2, ref=5.2e-07}]
+"H2O_dbg_solvent_excluded_nli_nld.inp"  = [{matcher="M042", tol=1.0E-2, ref=5.1e-07}]
+"H2O_dbg_isodensity_lpb.inp"        = [{matcher="M042", tol=1.0E-2, ref=5.3e-07}]
+#EOF

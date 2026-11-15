@@ -1,0 +1,131 @@
+# regtest-sccs-lpb-6 -- DYNAMICS fresh start from an MD restart with another time step. Run Al111_gce_dynamics.inp first (1 fs, writes Al111_gce_dynamics-1.restart),
+# copy that file next to this deck and run it: the electron-number dynamics starts again (RESTART_GCE F) and runs 4 steps of 0.5 fs from the restart.
+# Earlier builds compared the first interval with the zero counters of the initial evaluation and aborted with "the MD time step is not MOTION&MD TIMESTEP".
+&EXT_RESTART
+  RESTART_FILE_NAME Al111_gce_dynamics-1.restart
+  RESTART_GCE F
+&END EXT_RESTART
+&GLOBAL
+  PRINT_LEVEL low
+  PROJECT Al111_gce_dyn_dt_restart
+  RUN_TYPE MD
+&END GLOBAL
+&MOTION
+  &MD
+    ENSEMBLE NVE
+    STEPS 4
+    TIMESTEP [fs] 0.5
+    TEMPERATURE [K] 300.0
+  &END MD
+&END MOTION
+&FORCE_EVAL
+  METHOD Quickstep
+  &DFT
+    BASIS_SET_FILE_NAME BASIS_MOLOPT
+    POTENTIAL_FILE_NAME GTH_POTENTIALS
+    CHARGE 0
+    &MGRID
+      CUTOFF 300
+      REL_CUTOFF 40
+      NGRIDS 4
+    &END MGRID
+    &POISSON
+      PERIODIC XYZ
+      POISSON_SOLVER PERIODIC
+    &END POISSON
+    &QS
+      EPS_DEFAULT 1.0E-10
+      EXTRAPOLATION ASPC
+    &END QS
+    &PRINT
+      &SCCS on
+        &EACH
+          QS_SCF 0
+        &END EACH
+      &END SCCS
+    &END PRINT
+    &SCCS on
+      ALPHA [N*m^-1] 0.0
+      BETA [kbar] 0.0
+      GAMMA [mN/m] 0.0
+      DELTA_RHO 2.0E-5
+      DERIVATIVE_METHOD fft
+      DIELECTRIC_CONSTANT 78.36
+      EPS_SCCS 1.0E-6
+      EPS_SCF 0.5
+      MAX_ITER 200
+      METHOD ISODENSITY
+      MIXING 0.6
+      SOLVER NEWTON_CG
+      SOLVER_TOLERANCE 1.0E-9
+      SOLVER_MAX_ITER 50
+      DEBYE_LENGTH [angstrom] 3.04
+      &ISODENSITY
+        RHO_CAVITY [angstrom^-3] 0.0025
+        SWITCH_WIDTH 0.6
+      &END ISODENSITY
+    &END SCCS
+    &SCF
+      EPS_SCF 1.0E-6
+      MAX_SCF 400
+      SCF_GUESS atomic
+      ADDED_MOS 20
+      &DIAGONALIZATION on
+        ALGORITHM STANDARD
+      &END DIAGONALIZATION
+      &SMEAR on
+        METHOD FERMI_DIRAC
+        ELECTRONIC_TEMPERATURE [K] 300
+      &END SMEAR
+      &MIXING
+        METHOD BROYDEN_MIXING
+        ALPHA 0.2
+        NBROYDEN 8
+      &END MIXING
+      &GCE on
+        UPDATE_SCHEME DYNAMICS
+        UPDATE_EVERY SCF_CYCLE
+        TARGET_POTENTIAL [eV] 0.5
+        PHI_SHE [eV] 4.43
+        FERMI_TOL [eV] 0.01
+        MAX_OUTER_UPDATES 5
+        POTENTIOSTAT_PERIOD [fs] 20
+        POTENTIOSTAT_CHAIN_LENGTH 2
+      &END GCE
+      &PRINT
+        &RESTART off
+        &END RESTART
+      &END PRINT
+    &END SCF
+    &XC
+      &XC_FUNCTIONAL PBE
+      &END XC_FUNCTIONAL
+    &END XC
+  &END DFT
+  &SUBSYS
+    &CELL
+      A      5.726900    0.000000    0.000000
+      B      2.863450    4.959638    0.000000
+      C      0.000000    0.000000   20.000000
+      PERIODIC XYZ
+    &END CELL
+    &COORD
+      Al        0.000000    0.000000    7.662000
+      Al        2.863450    0.000000    7.662000
+      Al        1.431725    2.479820    7.662000
+      Al        4.295175    2.479820    7.662000
+      Al        1.431725    0.826607   10.000000
+      Al        4.295175    0.826607   10.000000
+      Al        2.863450    3.306427   10.000000
+      Al        5.726900    3.306427   10.000000
+      Al        2.863450    1.653213   12.338000
+      Al        5.726900    1.653213   12.338000
+      Al        4.295175    4.133033   12.338000
+      Al        7.158625    4.133033   12.338000
+    &END COORD
+    &KIND Al
+      BASIS_SET DZVP-MOLOPT-SR-GTH
+      POTENTIAL GTH-PBE-q3
+    &END KIND
+  &END SUBSYS
+&END FORCE_EVAL

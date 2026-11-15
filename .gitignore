@@ -1,0 +1,8 @@
+*.out
+*.cube
+*.orig
+*-RESTART*
+*.wfn*
+*.ener
+*.xyz
+__pycache__/

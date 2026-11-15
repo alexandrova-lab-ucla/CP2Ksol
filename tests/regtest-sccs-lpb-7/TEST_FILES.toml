@@ -1,0 +1,10 @@
+# regtest-sccs-lpb-7 -- flexible region mask (&SCCS &REGION &FLEXIBLE), H2O, 8 A box, CUTOFF 600
+# Energy of one ENERGY_FORCE run (nonlinear dielectric and ions, Newton path: tol 1.0E-7).
+"H2O_solvent_excluded_flexible.inp"     = [{matcher="E_total", tol=1.0E-7, ref=-17.221727179517988}]
+# RUN_TYPE DEBUG: M042 = sum over 3N components of |F_numerical - F_analytical| in Ha/bohr (see regtest-sccs-lpb-2).
+"H2O_dbg_solvent_excluded_flexible.inp" = [{matcher="M042", tol=1.0E-2, ref=3.2e-07}]
+# Decks that MUST ABORT are not listed; run them by hand (message in the header of each deck):
+#   H2O_flexible_sigma_abort.inp, H2O_flexible_kind_abort.inp, H2O_flexible_zlow_abort.inp
+# Former keyword names (aliases); same energy as H2O_solvent_excluded_flexible.inp.
+"H2O_solvent_excluded_flexible_legacy_names.inp" = [{matcher="E_total", tol=1.0E-7, ref=-17.221727179517988}]
+#EOF

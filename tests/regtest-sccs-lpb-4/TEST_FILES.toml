@@ -1,0 +1,8 @@
+# regtest-sccs-lpb-4 -- guards of the grand-canonical electrode and of the Poisson-Boltzmann solver.
+# H2O_nlpb_failure_abort.inp MUST ABORT and cannot be expressed as a matcher; run it by hand:
+#   H2O_nlpb_failure_abort.inp     : non-zero exit, 'SCCS NLPB did not converge in 2 consecutive SCF steps (SOLVER_MAX_FAILURES)'
+# It is deliberately NOT listed below, so the CP2K tester does not count its abort as a failure of the build.
+# The neutral k-point deck (MAX_OUTER_UPDATES 0, EXCESS_ELECTRONS 0) must run to completion; no reference energy is
+# recorded, so only the exit status is checked.
+"Al111_gce_kpoints_neutral.inp"   = []
+#EOF

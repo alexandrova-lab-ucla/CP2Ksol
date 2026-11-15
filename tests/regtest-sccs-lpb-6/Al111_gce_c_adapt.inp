@@ -1,0 +1,148 @@
+# regtest-sccs-lpb-6 -- UPDATE_INTERVAL 5 with one update per evaluation (CONVERGENCE_MODE 2) and a CAPACITANCE_INIT of 4 e/V against a slab
+# whose capacitance is below 1 e/V. N_e is updated on the force evaluations 1, 5, 10, 15. The capacitance of each update comes from the pair of the
+# earlier update evaluation, bounded to 0.5 .. 2 times the last accepted value: the "GCE| outer update" C column reads 4.0000, 2.0000, 1.1523,
+# 2.1924 e/V, and WF-TWF before the updates is -0.0349, +0.0749, -0.0551, -0.0262 eV. With C fixed at 4 e/V (earlier builds) every update
+# overshoots and the error grows: -0.0349, +0.0749, -0.1942 eV. Check: C of the second update is 2.0000 (the clamp), |WF-TWF| of the fourth
+# update is smaller than that of the second, and |dU| of the last "GCE| trace" line is <= 0.01 V (0.0020 V).
+&GLOBAL
+  PRINT_LEVEL medium
+  PROJECT Al111_gce_c_adapt
+  RUN_TYPE MD
+  SEED 1234
+&END GLOBAL
+&MOTION
+  &MD
+    ENSEMBLE NVE
+    STEPS 16
+    TIMESTEP [fs] 1.0
+    TEMPERATURE [K] 300.0
+  &END MD
+  &PRINT
+    &RESTART
+      BACKUP_COPIES 0
+      &EACH
+        MD 1
+      &END EACH
+    &END RESTART
+    &RESTART_HISTORY
+      &EACH
+        MD 7
+      &END EACH
+    &END RESTART_HISTORY
+  &END PRINT
+&END MOTION
+&FORCE_EVAL
+  METHOD Quickstep
+  &DFT
+    BASIS_SET_FILE_NAME BASIS_MOLOPT
+    POTENTIAL_FILE_NAME GTH_POTENTIALS
+    CHARGE 0
+    &MGRID
+      CUTOFF 300
+      REL_CUTOFF 40
+      NGRIDS 4
+    &END MGRID
+    &POISSON
+      PERIODIC XYZ
+      POISSON_SOLVER PERIODIC
+    &END POISSON
+    &QS
+      EPS_DEFAULT 1.0E-10
+      EXTRAPOLATION ASPC
+    &END QS
+    &PRINT
+      &SCCS on
+        &EACH
+          QS_SCF 0
+        &END EACH
+      &END SCCS
+    &END PRINT
+    &SCCS on
+      ALPHA [N*m^-1] 0.0
+      BETA [kbar] 0.0
+      GAMMA [mN/m] 0.0
+      DELTA_RHO 2.0E-5
+      DERIVATIVE_METHOD fft
+      DIELECTRIC_CONSTANT 78.36
+      EPS_SCCS 1.0E-6
+      EPS_SCF 0.5
+      MAX_ITER 200
+      METHOD ISODENSITY
+      MIXING 0.6
+      SOLVER NEWTON_CG
+      SOLVER_TOLERANCE 1.0E-9
+      SOLVER_MAX_ITER 50
+      DEBYE_LENGTH [angstrom] 3.04
+      &ISODENSITY
+        RHO_CAVITY [angstrom^-3] 0.0025
+        SWITCH_WIDTH 0.6
+      &END ISODENSITY
+    &END SCCS
+    &SCF
+      EPS_SCF 1.0E-6
+      MAX_SCF 300
+      SCF_GUESS atomic
+      ADDED_MOS 20
+      &DIAGONALIZATION on
+        ALGORITHM STANDARD
+      &END DIAGONALIZATION
+      &SMEAR on
+        METHOD FERMI_DIRAC
+        ELECTRONIC_TEMPERATURE [K] 1000
+      &END SMEAR
+      &MIXING
+        METHOD BROYDEN_MIXING
+        ALPHA 0.2
+        NBROYDEN 8
+      &END MIXING
+      &GCE on
+        UPDATE_SCHEME CAPACITANCE
+        UPDATE_EVERY SCF_CYCLE
+        TARGET_POTENTIAL [eV] 0.5
+        PHI_SHE [eV] 4.43
+        FERMI_TOL [eV] 0.01
+        UPDATE_INTERVAL 5
+        CONVERGENCE_MODE 2
+        MAX_OUTER_UPDATES 6
+        EXCESS_ELECTRONS -1.1
+        CAPACITANCE_INIT 4.0
+        CAPACITANCE_MAX 6.0
+        PIN_MIXER_G0 T
+      &END GCE
+      &PRINT
+        &RESTART off
+        &END RESTART
+      &END PRINT
+    &END SCF
+    &XC
+      &XC_FUNCTIONAL PBE
+      &END XC_FUNCTIONAL
+    &END XC
+  &END DFT
+  &SUBSYS
+    &CELL
+      A      5.726900    0.000000    0.000000
+      B      2.863450    4.959638    0.000000
+      C      0.000000    0.000000   20.000000
+      PERIODIC XYZ
+    &END CELL
+    &COORD
+      Al        0.000000    0.000000    7.662000
+      Al        2.863450    0.000000    7.662000
+      Al        1.431725    2.479820    7.662000
+      Al        4.295175    2.479820    7.662000
+      Al        1.431725    0.826607   10.000000
+      Al        4.295175    0.826607   10.000000
+      Al        2.863450    3.306427   10.000000
+      Al        5.726900    3.306427   10.000000
+      Al        2.863450    1.653213   12.338000
+      Al        5.726900    1.653213   12.338000
+      Al        4.295175    4.133033   12.338000
+      Al        7.158625    4.133033   12.338000
+    &END COORD
+    &KIND Al
+      BASIS_SET DZVP-MOLOPT-SR-GTH
+      POTENTIAL GTH-PBE-q3
+    &END KIND
+  &END SUBSYS
+&END FORCE_EVAL
