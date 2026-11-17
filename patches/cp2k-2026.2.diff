@@ -648,7 +648,7 @@ diff -ruN a/src/gce_dyn_types.F b/src/gce_dyn_types.F
 +!   CP2K: A general program to perform molecular dynamics simulations                              !
 +!   Copyright 2000-2026 CP2K developers group <https://cp2k.org>                                   !
 +!                                                                                                  !
-+!   SPDX-License-Identifier: GPL-2.0-or-later                                                      !
++!   SPDX-License-Identifier: GPL-3.0-or-later                                                      !
 +!--------------------------------------------------------------------------------------------------!
 +
 +! **************************************************************************************************
@@ -3058,7 +3058,7 @@ diff -ruN a/src/qs_sccs_cavity.F b/src/qs_sccs_cavity.F
 +!   CP2K: A general program to perform molecular dynamics simulations                              !
 +!   Copyright 2000-2026 CP2K developers group <https://cp2k.org>                                   !
 +!                                                                                                  !
-+!   SPDX-License-Identifier: GPL-2.0-or-later                                                      !
++!   SPDX-License-Identifier: GPL-3.0-or-later                                                      !
 +!--------------------------------------------------------------------------------------------------!
 +
 +! **************************************************************************************************
@@ -6292,7 +6292,7 @@ diff -ruN a/src/qs_sccs_nldiel.F b/src/qs_sccs_nldiel.F
 +!   CP2K: A general program to perform molecular dynamics simulations                              !
 +!   Copyright 2000-2026 CP2K developers group <https://cp2k.org>                                   !
 +!                                                                                                  !
-+!   SPDX-License-Identifier: GPL-2.0-or-later                                                      !
++!   SPDX-License-Identifier: GPL-3.0-or-later                                                      !
 +!--------------------------------------------------------------------------------------------------!
 +
 +! **************************************************************************************************
@@ -6460,7 +6460,7 @@ diff -ruN a/src/qs_sccs_nlpb.F b/src/qs_sccs_nlpb.F
 +!   CP2K: A general program to perform molecular dynamics simulations                              !
 +!   Copyright 2000-2026 CP2K developers group <https://cp2k.org>                                   !
 +!                                                                                                  !
-+!   SPDX-License-Identifier: GPL-2.0-or-later                                                      !
++!   SPDX-License-Identifier: GPL-3.0-or-later                                                      !
 +!--------------------------------------------------------------------------------------------------!
 +
 +! **************************************************************************************************
@@ -8759,7 +8759,7 @@ diff -ruN a/src/qs_sccs_pw.F b/src/qs_sccs_pw.F
 +!   CP2K: A general program to perform molecular dynamics simulations                              !
 +!   Copyright 2000-2026 CP2K developers group <https://cp2k.org>                                   !
 +!                                                                                                  !
-+!   SPDX-License-Identifier: GPL-2.0-or-later                                                      !
++!   SPDX-License-Identifier: GPL-3.0-or-later                                                      !
 +!--------------------------------------------------------------------------------------------------!
 +
 +! **************************************************************************************************
@@ -9595,7 +9595,7 @@ diff -ruN a/src/qs_scf_gce_dyn.F b/src/qs_scf_gce_dyn.F
 +!   CP2K: A general program to perform molecular dynamics simulations                              !
 +!   Copyright 2000-2026 CP2K developers group <https://cp2k.org>                                   !
 +!                                                                                                  !
-+!   SPDX-License-Identifier: GPL-2.0-or-later                                                      !
++!   SPDX-License-Identifier: GPL-3.0-or-later                                                      !
 +!--------------------------------------------------------------------------------------------------!
 +
 +! **************************************************************************************************

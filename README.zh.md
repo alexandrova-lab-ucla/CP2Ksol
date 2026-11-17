@@ -311,4 +311,4 @@ GCE| dyn  step <n>  md_step <i>  N_e <x> e  dU <y> V  meas <T|F>  P_n <p>  Omega
 
 使用本代码时，请引用本仓库，以及上面与你所用模型相关的论文。
 
-GPL-2.0-or-later，即 CP2K 的许可证，本工作是对 CP2K 的修改。见 `LICENSE`。
+GPL-3.0-or-later。CP2Ksol 是对 CP2K 的修改；CP2K 由其开发者按 GPL-2.0-or-later 发布，该许可允许按第 3 版或更新版本再分发。改自 CP2K 的文件保留上游文件头，本仓库中的修改和新增模块按 GPL-3.0-or-later 授权。见 `LICENSE`。

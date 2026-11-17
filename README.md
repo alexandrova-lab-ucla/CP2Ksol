@@ -311,4 +311,4 @@ Methods the implementation builds on:
 
 If you use this code, cite this repository and the papers above that apply to the models you run.
 
-GPL-2.0-or-later, the license of CP2K, which this work modifies. See `LICENSE`.
+GPL-3.0-or-later. CP2Ksol modifies CP2K, which the CP2K developers distribute under GPL-2.0-or-later, a license that permits redistribution under version 3 or any later version. The modified CP2K files keep their upstream headers, and the modifications and the new modules in this repository are licensed under GPL-3.0-or-later. See `LICENSE`.
