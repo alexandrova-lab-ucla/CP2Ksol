@@ -1,6 +1,6 @@
-<p align="center"><img src="docs/logo/logo.png" alt="cp2k-implicit-electrolyte" width="360"></p>
+<p align="center"><img src="docs/logo/logo.png" alt="CP2Ksol" width="360"></p>
 
-# cp2k-implicit-electrolyte
+# CP2Ksol
 
 [English](README.md) · [中文](README.zh.md)
 

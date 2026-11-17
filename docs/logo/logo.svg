@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" width="1200" height="600" role="img" aria-labelledby="t">
-  <title id="t">cp2k-implicit-electrolyte</title>
+  <title id="t">CP2Ksol</title>
   <defs>
     <linearGradient id="eps" x1="0" y1="1" x2="0" y2="0">
       <stop offset="0" stop-color="#2b7bb9" stop-opacity="0"/>
@@ -55,8 +55,7 @@
   <g transform="rotate(-25 300 405)"><circle cx="276.4" cy="386.5" r="10.0" fill="none" stroke="#2b7bb9" stroke-width="4.0"/><circle cx="323.6" cy="386.5" r="10.0" fill="none" stroke="#2b7bb9" stroke-width="4.0"/><circle cx="300" cy="405" r="17.0" fill="#2b7bb9"/></g>
   <g transform="rotate(15 440 425)"><circle cx="416.4" cy="406.5" r="10.0" fill="none" stroke="#2b7bb9" stroke-width="4.0"/><circle cx="463.6" cy="406.5" r="10.0" fill="none" stroke="#2b7bb9" stroke-width="4.0"/><circle cx="440" cy="425" r="17.0" fill="#2b7bb9"/></g>
   <g fill="#2b7bb9" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-weight="700">
-    <text x="610" y="270" font-size="80">implicit</text>
-    <text x="610" y="360" font-size="80">electrolyte</text>
+    <text x="610" y="310" font-size="110">CP2Ksol</text>
   </g>
-  <text x="614" y="425" font-size="40" fill="#7f90a5" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" letter-spacing="2">for CP2K</text>
+  <text x="614" y="375" font-size="34" fill="#7f90a5" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" letter-spacing="1">implicit electrolyte for CP2K</text>
 </svg>
