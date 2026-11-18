@@ -4,6 +4,8 @@
 
 [English](README.md) · [中文](README.zh.md)
 
+Developed by [Leshen Zhang](https://github.com/leshenzhang) (Alexandrova group, UCLA).
+
 Implicit solvent, implicit electrolyte and a constant-potential (grand-canonical) electrode for **CP2K 2026.2** (Quickstep, GPW). It runs single points, geometry optimisations and molecular dynamics, with or without explicit water in the cell.
 
 The code is plain Fortran in the CP2K source tree. It needs no external library or embedded Python and leaves the MPI lifecycle unchanged.
@@ -309,6 +311,6 @@ Methods the implementation builds on:
 - Solvent-aware SCCS in CP2K, `METHOD SAA_ANDREUSSI`: https://doi.org/10.1016/j.cpc.2025.109563
 - Nosé–Hoover chain integrator: https://doi.org/10.1080/00268979600100761
 
-If you use this code, cite this repository and the papers above that apply to the models you run.
+CP2Ksol is developed and maintained by Leshen Zhang (https://github.com/leshenzhang). If you use this code, cite this repository (see `CITATION.cff`) and the papers above that apply to the models you run.
 
 GPL-3.0-or-later. CP2Ksol modifies CP2K, which the CP2K developers distribute under GPL-2.0-or-later, a license that permits redistribution under version 3 or any later version. The modified CP2K files keep their upstream headers, and the modifications and the new modules in this repository are licensed under GPL-3.0-or-later. See `LICENSE`.

@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "CP2Ksol: implicit electrolyte and constant-potential model for CP2K 2026.2"
+authors:
+  - family-names: Zhang
+    given-names: Leshen
+    affiliation: "Department of Chemistry and Biochemistry, University of California, Los Angeles"
+    website: "https://github.com/leshenzhang"
+repository-code: "https://github.com/alexandrova-lab-ucla/CP2Ksol"
+license: GPL-3.0-or-later
+type: software

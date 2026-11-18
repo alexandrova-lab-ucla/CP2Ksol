@@ -4,6 +4,8 @@
 
 [English](README.md) · [中文](README.zh.md)
 
+开发者：[Leshen Zhang](https://github.com/leshenzhang)（UCLA Alexandrova 课题组）。
+
 为 **CP2K 2026.2**（Quickstep, GPW）加入隐式溶剂、隐式电解质和恒电势（巨正则）电极。支持单点、几何优化和分子动力学，晶胞里可以有显式水，也可以没有。
 
 代码是 CP2K 源码树里的纯 Fortran，不依赖外部库和内嵌 Python，不改变 MPI 的生命周期。
@@ -309,6 +311,6 @@ GCE| dyn  step <n>  md_step <i>  N_e <x> e  dU <y> V  meas <T|F>  P_n <p>  Omega
 - CP2K 中的溶剂感知 SCCS，`METHOD SAA_ANDREUSSI`：https://doi.org/10.1016/j.cpc.2025.109563
 - Nosé–Hoover 链积分器：https://doi.org/10.1080/00268979600100761
 
-使用本代码时，请引用本仓库，以及上面与你所用模型相关的论文。
+CP2Ksol 由 Leshen Zhang（https://github.com/leshenzhang）开发和维护。使用本代码时，请引用本仓库（见 `CITATION.cff`），以及上面与你所用模型相关的论文。
 
 GPL-3.0-or-later。CP2Ksol 是对 CP2K 的修改；CP2K 由其开发者按 GPL-2.0-or-later 发布，该许可允许按第 3 版或更新版本再分发。改自 CP2K 的文件保留上游文件头，本仓库中的修改和新增模块按 GPL-3.0-or-later 授权。见 `LICENSE`。
